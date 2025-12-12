@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title of the page -->
+    <title>Viorel Puscasu – Portfolio</title>
+
+    <!-- Loods Bootstrap CSS via CDN, to be able to use grid,cards,navbar,forms,tables.-->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+    
+    <!-- I added CSS to control the dark bar,hero design, image shape,spacing -->
+    <style> 
+        body {
+            /* Affects everything inside the body */
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* HERO */
+        #hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+        }
+
+        /*.profile-img {
+           /* max-width: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+
+
+        }*/
+
+
+
+        .profile-img {
+            width: 260px;
+            height: 360px;
+            border-radius: 20px;
+            object-fit: cover;
+            object-position: center top; /* reduces empty space above head */
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+
+
+
+
+
+
+
+        section {
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f8f9fa;
+        }
+
+        body.dark-mode .card {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+
+        body.dark-mode .table {
+            color: #f8f9fa;
+        }
+
+        body.dark-mode .navbar,
+        body.dark-mode .modal-content {
+            background-color: #1e1e1e;
+        }
+
+        body.dark-mode .form-control,
+        body.dark-mode .form-select {
+            background-color: #2a2a2a;
+            color: #f8f9fa;
+            border-color: #444;
+        }
+
+        body.dark-mode a {
+            color: #86b7ff;
+        }
+
+
+
+
+
+            /* Test(Fix dark) */
+        /* Dark mode: make card text readable */
+        body.dark-mode .card,
+        body.dark-mode .card-title,
+        body.dark-mode .card-text,
+        body.dark-mode .card p,
+        body.dark-mode .card small {
+            color: #f8f9fa;
+        }
+
+        /* Dark mode: adjust muted text (e.g. in the projects section) */
+        body.dark-mode .text-muted {
+            color: #ced4da !important;
+        }
+        /* Dark mode: override bg-light backgrounds(some sections remains white because of bootstratp, without this) */
+        body.dark-mode .bg-light {
+            background-color: #121212 !important;
+        }
+
+
+
+
+
+
+
+
+        footer {
+            padding: 2rem 0;
+        }
+
+
+
+        /* New(Test)- the script to devide the sections */
+        /* Section divider band */
+        .section-divider {
+             height: 40px;
+            background-color: #f1f1f1;
+        }
+
+        /* Dark mode version */
+        body.dark-mode .section-divider {
+            background-color: #222;
+        }
+        
+
+
+    /* ============================
+    DARK MODE: Fixing tables from the educations
+    ============================ */
+
+    /* Entire table background + text */
+        body.dark-mode .table {
+            background-color: #121212 !important;
+            color: #f8f9fa !important;
+        }
+
+        /* Header row styling */
+        body.dark-mode .table thead th {
+            background-color: #1e1e1e !important;
+             color: #f8f9fa !important;
+             border-color: #444 !important;
+        }
+
+        /* Regular table cells */
+        body.dark-mode .table td,
+        body.dark-mode .table th {
+            background-color: #121212 !important;
+            color: #f8f9fa !important;
+            border-color: #444 !important;
+        }
+
+        /* Striped rows: odd */
+        body.dark-mode .table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #181818 !important;
+        }
+
+        /* Striped rows: even */
+        body.dark-mode .table.table-striped tbody tr:nth-of-type(even) {
+            background-color: #141414 !important;
+        }
+
+        /* Remove default hover colour issues */
+        body.dark-mode .table-hover tbody tr:hover {
+            background-color: #222 !important;
+            color: #fff !important;
+        }
+
+    /* ============================
+    DARK MODE: Fixing tables from the about me section to ovveride the rule of bootstrap list that makes them white by default.
+    ============================ */
+
+        /* Dark mode: About Me list-group box */
+        body.dark-mode .list-group {
+            background-color: #1e1e1e; /* overall background */
+            border-radius: 0.5rem;
+        }
+
+        body.dark-mode .list-group-item {
+            background-color: #1e1e1e !important;
+            color: #f8f9fa !important;
+            border-color: #444 !important;
+        }
+
+        /* Make the <strong> labels a bit brighter */
+        body.dark-mode .list-group-item strong {
+            color: #ffffff;
+        }
+
+
+
+
+
+
+
+
+    /* =========================
+   PROJECT Section features, test ( Highlights the tables when passing with the cursour)
+   ========================= */
+
+        .project-card {
+            transition: transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+            border-color: #0d6efd; /* Bootstrap primary */
+        }
+
+        /* Dark mode hover */
+        body.dark-mode .project-card:hover {
+            box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+            border-color: #86b7ff;
+        }
+
+        /* Optional: title highlight */
+        .project-card:hover .card-title {
+            color: #0d6efd;
+        }
+
+        body.dark-mode .project-card:hover .card-title {
+            color: #86b7ff;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+<!-- =============== NAVBAR (bootstrap component to create an interactive line at the top) =============== -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#hero">Viorel Puscasu</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar" aria-controls="mainNavbar"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+                <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link" href="#hobbies">Hobbies</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="features.html">Features</a>
+                </li>
+            </ul>
+
+            <!-- Dark mode toggle -->
+            <button id="themeToggle" class="btn btn-outline-light btn-sm">
+                🌙 Dark Mode
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- =============== HERO(class:container to use grid, centers the content in the middle) =============== -->
+<header id="hero" class="container">
+<!-----Grid -->
+    <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start mt-5 pt-4">
+            <!-----takes the output from JavaScript depending on the time(morning...) -->
+            <p id="greeting" class="lead mb-1">
+                <!-- filled by JS -->
+            </p>
+            <h1 class="display-4 fw-bold">I'm Viorel Puscasu</h1>
+            <p class="lead">
+                Cloud Computing Student &amp; Networking Technologies graduate
+            </p>
+            <p class="text-muted">
+                I enjoy turning complex data into clear, interactive visuals using code and design.
+            </p>
+            <a href="#projects" class="btn btn-primary btn-lg me-2 mt-2">View Projects</a>
+            <button class="btn btn-outline-secondary btn-lg mt-2"
+                    data-bs-toggle="modal" data-bs-target="#contactModal">
+                Contact
+            </button>
+        </div>
+
+        <div class="col-md-6 text-center mt-5">
+            <img src="img/profile.jpg" alt="Profile photo" class="profile-img shadow">
+        </div>
+    </div>
+</header>
+
+<div class="section-divider"></div>
+
+<!-- =============== ABOUT =============== -->
+<section id="about">
+
+    <div class="container"> <!---Creates structured spacing-->
+        <h2 class="mb-4">About Me</h2><!--Creates bootstrap spacing utilities-->
+        <div class="row">
+            <div class="col-lg-8">
+                <p>
+                    Hi, I'm Viorel Puscasu, a passionate and motivated IT professional specializing in Cloud Computing.
+                    I completed a Networking Technologies course, where i built a strong foundation in network design,
+                    security, and infrastrucutre management. This experience inspired me to continue expanding my skill set, 
+                    and I am now progressing into Year 4 of Cloud Computing (Level 8) to improve my knowledge in cloud
+                    arhitecture, automation, and scalable systems.
+                </p>
+                <p>
+                   I enjoy solving real-world technical challenges and continuously learning new technologies.
+                    During my studies, I’ve worked with several programming languages, including C, C++, Python,
+                     HTML, and Java, and gained solid knowledge of TCP/IP protocols. My background in networking 
+                     and programming allows me to approach problems from multiple angles and build efficient, 
+                     well-structured solutions.
+                </p>
+            </div>
+            <div class="col-lg-4 project-card">
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Course:</strong> TU865 - Cloud Computing (In Progress)</li>
+                    <li class="list-group-item"><strong>Course:</strong> TU716 - Networking Technologies (Completed)</li>
+                    <li class="list-group-item"><strong>Study mode:</strong> Full-time</li>
+                    <li class="list-group-item"><strong>Interested in:</strong> Full-time jobs &amp; graduate roles</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- =============== EDUCATION =============== -->
+<section id="education" class="bg-light">
+    <div class="container">
+        <h2 class="mb-4">Education &amp; Qualifications</h2>
+        <p class="mb-3">
+            Example modules and qualifications are shown below.
+        </p>
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Course</th>
+                        <th>University</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>2017-2021</td><td>Builder Technician, speciality: Construction and Operation of Buildings and Edificies</td><td>Public Institution Center of Excellence in Construction</td></tr>
+                    <tr><td>2020</td><td>International Baccalaureate (IB) Diploma</td><td>Public Institution Center of Excellence in Construction</td></tr>
+                    <tr><td>2022-2025</td><td>TU 716 - BSc in Networking Technologies</td><td>TU Dublin</td></tr>
+                    <tr><td>2025-2026</td><td>TU 865 - BSc (Hons) in Cloud Computing</td><td>TU Dublin</td></tr>
+                    
+   
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- =============== PROJECTS =============== -->
+<section id="projects">
+    <div class="container">
+        <h2 class="mb-4">Projects</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 project-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Line tracking robot</h5>
+                        <p class="text-muted mb-0"><small>2nd Year Project</small></p>
+                        <p class="card-text">
+                         Designed and built a line-tracking robot capable of following a predefined path using sensor-based guidance.
+                         I developed the control code, assembled the IoT and electronic components, and carried out testing and
+                         calibration to ensure smooth and accurate movement. This project strengthened my skills in embedded programming,
+                         sensor integration, and troubleshooting hardware–software interactions.   
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 project-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Attendance Monitoring System with Smart Security Implementation</h5>
+                        <p class="text-muted mb-0"><small>3rd Year Project</small></p>
+                        <p class="card-text">
+                         Developed an automated attendance monitoring system using an RFID scanner and reader integrated with 
+                         IoT components. I wrote the system code and deployed it on an Arduino-compatible microcontroller (Py/ESP-based),
+                         enabling real-time data capture and processing. To enhance security, I installed and configured a camera module 
+                         that automatically captures an image of each user as they scan their RFID card. This project improved my skills 
+                         in microcontroller programming, hardware integration, and building secure, IoT-driven solutions.   
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 project-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Final Year Project</h5>
+                        <p class="text-muted mb-0"><small>4th Year Project</small></p>
+                        <p class="card-text">
+                            Building and automated, secure, and scalable Moodle deployment using streamlined CI/CD,
+                            Infrastrucutre as Code (IaC), and cloud-optimized architecture.
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- =============== EXPERIENCE =============== -->
+<section id="experience" class="bg-light">
+    <div class="container">
+        <h2 class="mb-4">Work Placement &amp; Experience</h2>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card mb-3 project-card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-1">Age-Friendly AI Intern</h5>
+                        <p class="mb-1"><strong>Age-Friendly AI .</strong> | Summer 2025</p>
+                        <ul class="mb-0">
+                            <li>Created prototype IoT projects.</li>
+                            <li>Cleaned and prepared datasets using spreadsheets and scripts.</li>
+                            <li>Worked with specialists to improve the projects.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card project-card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-1">Supervisor</h5>
+                        <p class="mb-1"><strong>Boojum </strong> | 2022–2025</p>
+                        <ul class="mb-0">
+                            <li>Helped me develop strong leadership, communication, and organisational skills in a fast-paced environment.
+                            </li>
+                            <li>I gained experience in managing teams, coordinating daily operations, and handling customers queries.</li>
+                            <li> This role strengthened my ability to stay calm under pressure, solve problems quickly, and make effective decisions.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mt-4 mt-lg-0">
+                <p class="text-muted">
+                    I’m keen to apply what I’ve learned on real-world projects involving dashboards,
+                    reporting, or interactive visualisations.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- =============== SKILLS =============== -->
+<section id="skills">
+    <div class="container">
+        <h2 class="mb-4">Skills &amp; Achievements</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Technical Skills</h5>
+
+                <div class="mb-3">
+                    <span>HTML &amp; CSS</span>
+                    <div class="progress" role="progressbar" aria-label="HTML skill">
+                        <div class="progress-bar" style="width: 90%">Advanced</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <span>JavaScript</span>
+                    <div class="progress" role="progressbar" aria-label="JavaScript skill">
+                        <div class="progress-bar" style="width: 80%">Proficient</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <span>Python</span>
+                    <div class="progress" role="progressbar" aria-label="Bootstrap skill">
+                        <div class="progress-bar" style="width: 85%">Proficient</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <span>C/C++</span>
+                    <div class="progress" role="progressbar" aria-label="Data viz skill">
+                        <div class="progress-bar" style="width: 80%">Proficient</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mt-4 mt-md-0">
+                <h5>Achievements &amp; Soft Skills</h5>
+                <ul>
+                    <li>Strong results in IoT and Web Development modules.</li>
+                    <li>Knowlegde of C/C++/Python/ Ansamble programming languages.</li>
+                    <li>Good teamwork and communication from group projects.</li>
+                    <li>Organised and detail-focused when planning projects.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="section-divider"></div>
+
+
+<!-- =============== HOBBIES =============== -->
+<section id="hobbies" class="bg-light">
+    <div class="container">
+        <h2 class="mb-4">Hobbies &amp; Interests</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Data &amp; Tech</h5>
+                <p>
+                    I like exploring public datasets and experimenting with different ways
+                    of visualising information, especially around sport and technology.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h5>Design</h5>
+                <p>
+                    I like creating websites and working with HTML/CSS/JavaScript formats.
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h5>Outside of Tech</h5>
+                <p>
+                    In my spare time I enjoy reading, listening to music, and going for
+                    walks, which helps me stay creative and focused.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Devides the section by forming a line-->
+<div class="section-divider"></div>
+
+
+<!-- =============== CONTACT =============== -->
+<section id="contact">
+    <div class="container">
+        <h2 class="mb-4">Contact Me</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <form>
+                    <div class="mb-3">
+                        <label for="nameInput" class="form-label">Name</label>
+                        <input type="text" id="nameInput" class="form-control" placeholder="Your name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="emailInput" class="form-label">Email</label>
+                        <input type="email" id="emailInput" class="form-control" placeholder="you@example.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="messageInput" class="form-label">Message</label>
+                        <textarea id="messageInput" rows="4" class="form-control"
+                                  placeholder="How can I help?"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Send Message (Demo)
+                    </button>
+                </form>
+            </div>
+
+            <div class="col-md-6 mt-4 mt-md-0">
+                <h5>Contact Details</h5>
+                <p class="mb-1"><strong>Email:</strong> viorel.puscasu13@gmail.com</p>
+                <p class="mb-1"><strong>LinkedIn:</strong> linkedin.com/in/Viorel Puscasu</p>
+                <p class="mb-1"><strong>GitHub:</strong> github.com/viorelpuscasu13-tech</p>
+                <p class="text-muted mt-2">
+                    Use the details above to contact me for full-time jobs or graduate roles.
+                </p>
+                <button class="btn btn-outline-secondary mt-2"
+                        data-bs-toggle="modal" data-bs-target="#contactModal">
+                    View Contact Details in Modal
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =============== CONTACT MODAL =============== -->
+<div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactModalLabel">Contact Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>You can reach me via:</p>
+                <ul>
+                    <li>Email: <a href="mailto:https://mail.google.com/mail/u/0/#inbox">viorel.puscasu13@gmail.com</a></li>
+                    <li>LinkedIn: <a href="https://www.linkedin.com/feed/">linkedin.com/in/Viorel Puscasu</a></li>
+                    <li>GitHub: <a href="https://github.com/viorelpuscasu13-tech">https://github.com/viorelpuscasu13-tech</a></li>
+                </ul>
+                <p class="mb-0">
+                    I am happy to discuss full-time jobs or graduate roles.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =============== FOOTER =============== -->
+<footer class="bg-dark text-light text-center">
+    <div class="container">
+        <p class="mb-1">
+            &copy; <span id="year"></span> Viorel Puscasu – Portfolio Website
+        </p>
+        <p class="mb-0">
+            Built with Bootstrap and JavaScript for Data Visualisation CA 2.
+        </p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="js/script.js"></script>
+</body>
+</html>
